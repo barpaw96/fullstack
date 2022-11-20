@@ -30,7 +30,10 @@ function App() {
               </div>
             </div>
       <Routes>
+      
         <Route exact path="/list" element={<Home/>}/>
+
+        
         <Route exact path="/adduser" element={<AddUser/>}/>
         <Route exact path="/list/edituser/:id" element={<EditUser/>}/>
         <Route exact path="/caruzel" element={<Caruzel/>}/>

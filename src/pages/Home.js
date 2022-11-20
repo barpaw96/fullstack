@@ -18,8 +18,20 @@ export default function Home() {
     
 
     const [page, setPage] = useState(1)
-    const maxPage = useMemo(() => Math.ceil(users.length / PAGE_LIMIT), [users])
-    const displayedUsers = useMemo(() => users.slice((page - 1) * PAGE_LIMIT, page * PAGE_LIMIT), [users, page])
+    const filteredUsers = useMemo(() => users.filter((user) => {
+      return search.toLowerCase() === '' ? user : user.name.
+      toLowerCase().includes(search)
+    }), [search, users])
+    const maxPage = useMemo(() => {
+      const newValue = Math.ceil(filteredUsers.length / PAGE_LIMIT)
+
+      if (newValue) {
+        setPage(page => page > newValue ? newValue : page)
+      }
+
+      return newValue
+    }, [filteredUsers])
+    const displayedUsers = useMemo(() => filteredUsers.slice((page - 1) * PAGE_LIMIT, page * PAGE_LIMIT), [filteredUsers, page])
     
     // const toastTrigger = document.getElementById('liveToastBtn')
     // if (toastTrigger) {
@@ -77,7 +89,11 @@ export default function Home() {
       </div>
         <div className='py-4'>
 
-          
+        { !loading && <div style={{ display: 'flex', fontWeight: 700, width: '100%', justifyContent: 'space-between', marginBottom: '10px' }}>
+  <div>Page {page}</div>
+  <div style={{ display: 'flex', gap: '5px' }}>{new Array(maxPage).fill(0).map((_, i) => <div key={i} onClick={() => setPage(i+1)}>{i+1}</div>)}</div>
+</div>}
+
         <table className="table border shadow">
   <thead>
     <tr>
@@ -92,10 +108,7 @@ export default function Home() {
   </thead>
   <tbody>
     {
-        displayedUsers.filter((user) => {
-          return search.toLowerCase() === '' ? user : user.name.
-          toLowerCase().includes(search)
-        }).map((user, index)=>(
+        displayedUsers.map((user, index)=>(
             <tr>
             <th scope="row" key={index}>{(page - 1) * PAGE_LIMIT + index + 1}</th>
             <td>{user.name}</td>
@@ -173,10 +186,6 @@ export default function Home() {
 
   </tbody>
 </table> 
-
-{ !loading && <div style={{ display: 'flex', gap: '5px', fontWeight: 700, width: '100%', justifyContent: 'center' }}>
-  {new Array(maxPage).fill(0).map((_, i) => <div key={i} onClick={() => setPage(i+1)}>{i+1}</div>)}
-</div>}
         </div>
     </div>
   )

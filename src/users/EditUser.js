@@ -2,7 +2,6 @@ import axios from 'axios';
 import 'bootstrap/dist/js/bootstrap'
 import React, {useEffect, useState} from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import bootstrap from 'bootstrap/dist/js/bootstrap';
 
 export default function EditUser() {
 
@@ -43,27 +42,14 @@ export default function EditUser() {
         setUsers(result.data);
     };
 
-
-
-
-    const toastTrigger = document.getElementById('liveToastBtn')
-const toastLiveExample = document.getElementById('liveToast')
-if (toastTrigger) {
-  toastTrigger.addEventListener('click', () => {
-    const toast = new bootstrap.Toast(toastLiveExample)
-
-    toast.show()
-  })
-}
-
     return (
     <div className='container'>
         <div className='row'>
             <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
                 <h2 className='text-center m-4'>Edit User</h2>
-                <form onSubmit={(e)=> onSubmit(e)}>
+                <form  onSubmit={(e)=> onSubmit(e)} novalidate>
                 <div className='mb-3'>
-                    <label htmlFor='Name' className='forma-label'>
+                    <label htmlFor='validationServer03' className='forma-label'>
                         Name
                     </label>
                     <input 
@@ -73,6 +59,7 @@ if (toastTrigger) {
                     name="name"
                     value={name}
                     onChange={(e)=>onInputChange(e)}
+                    required
                     />
                 </div>
                 <div className='mb-3'>
@@ -139,22 +126,7 @@ if (toastTrigger) {
                 </select>
 
                 </div> 
-                <button type='submit' className='btn btn-outline-primary' id="liveToastBtn">Submit</button>
-                <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-</div>
-
-
+                <button type='submit' className='btn btn-outline-primary'>Submit</button>
                 <Link className='btn btn-outline-danger mx-2' to="/list">Cancel</Link>   
                 
                 
