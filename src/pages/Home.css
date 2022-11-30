@@ -1,0 +1,7 @@
+.page-link {
+    text-decoration: "none",
+}
+
+.page-link:hover {
+    text-decoration: underline;
+}

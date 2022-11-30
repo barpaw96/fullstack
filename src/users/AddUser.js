@@ -31,12 +31,29 @@ export default function AddUser() {
 
     const onSubmit=async(e)=>{
         e.preventDefault();
-        await axios.post("http://localhost:8080/user", user);
-        navigate("/list");
+        try {
+            const res = await axios.post("http://localhost:8080/user", user);
 
-        const toastLiveExample = document.getElementById('toastUserAdded')
-        const toast = new bootstrap.Toast(toastLiveExample)
-        toast.show()
+            navigate("/list");
+
+            const toastLiveExample = document.getElementById('toastUserAdded')
+            const toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+        } catch (error) {
+           console.log(error)
+         
+           if(error.response.status === 409){
+            const toastLiveExample = document.getElementById('toastUserNotEmail')
+            const toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+         }
+         else if (error.response.status === 410){
+                const toastLiveExample = document.getElementById('toastNotUser')
+                const toast = new bootstrap.Toast(toastLiveExample)
+                toast.show()
+            }
+            
+        }
     };
     
     const isSubmitDisabled = useMemo(() => !user.sex || !user.comment || !user.email || !user.name || !user.username, [user])

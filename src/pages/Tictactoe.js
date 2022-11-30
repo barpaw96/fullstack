@@ -5,24 +5,15 @@ import 'bootstrap/dist/js/bootstrap'
 import { Board } from './Components/Board'
 import { ScoreBoard } from './Components/ScoreBoard'
 import { ResetButton } from "./Components/ResetButton"
+import WIN_CONDITIONS from '../consts/winConditions'
 
 export default function Tictactoe() {
-
-  const WIN_CONDITTIONS = [
-
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6]
-
-  ]
-  
-  
   const [board, setBoard] = useState(Array(9).fill(null));
+
+  React.useEffect(() => {
+    console.log(board)
+  }, [board])
+  
   const [xPlaying, setXplaying] = useState(true);
   const [scores, setScores] = useState({ xScore: 0, oScore: 0})
   const [gameOver, setGameOver] = useState(false);
@@ -55,8 +46,8 @@ export default function Tictactoe() {
   }
 
   const checkWinner = (board) => {
-    for (let i=0; i < WIN_CONDITTIONS.length; i++){
-      const [x,y,z]= WIN_CONDITTIONS[i];
+    for (let i=0; i < WIN_CONDITIONS.length; i++){
+      const [x,y,z]= WIN_CONDITIONS[i];
 
       if(board[x] && board[x] === board[y] && board[y] === board[z]){
         setGameOver(true);
